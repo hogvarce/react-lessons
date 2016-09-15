@@ -38,3 +38,15 @@ export function saveCourse(course) {
     })
   }
 }
+
+export function removeCourse(course) {
+  return (dispatch, getState) => {
+    dispatch(beginAjaxCall());
+    return courseApi.deleteCourse(course).then(courses => {
+      dispatch(loadCoursesSuccess(courses));
+    }).catch(error => {
+      dispatch(ajaxCallError(error));
+      throw(error);
+    })
+  }
+}

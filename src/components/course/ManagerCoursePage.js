@@ -5,10 +5,9 @@ import * as courseActions from '../../actions/courseActions';
 import CourseForm from './CourseForm';
 import toastr from 'toastr';
 
-class ManagerCoursePage extends React.Component {
+export class ManagerCoursePage extends React.Component {
     constructor(props, context) {
       super(props, context);
-
       this.state = {
         course: Object.assign({}, this.props.course),
         errors: {},
@@ -17,6 +16,7 @@ class ManagerCoursePage extends React.Component {
 
       this.updateCourseState = this.updateCourseState.bind(this);
       this.saveCourse = this.saveCourse.bind(this);
+      this.removeCourse = this.removeCourse.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -32,8 +32,35 @@ class ManagerCoursePage extends React.Component {
       return this.setState({course});
     }
 
+    courseFormIsValid() {
+      let formIsValid = true;
+      let errors = {};
+
+      if (this.state.course.title.length < 5) {
+        errors.title = 'Title must be at least 5 characters.';
+        formIsValid = false;
+      }
+
+      this.setState({errors});
+      return formIsValid;
+    }
+
+    removeCourse(event) {
+      event.preventDefault();
+      this.setState({saving: true});
+      this.props.actions.removeCourse(this.state.course)
+        .then(() => this.redirect())
+        .catch(error => {
+          toastr.error(error);
+          this.setState({saving: false});
+        });
+    }
+
     saveCourse(event) {
       event.preventDefault();
+      if(!this.courseFormIsValid()) {
+        return;
+      }
       this.setState({saving: true});
       this.props.actions.saveCourse(this.state.course)
         .then(() => this.redirect())
@@ -58,6 +85,7 @@ class ManagerCoursePage extends React.Component {
               saving={this.state.saving}
               onChange={this.updateCourseState}
               onSave={this.saveCourse}
+              onRemove={this.removeCourse}
             />
         );
     }
