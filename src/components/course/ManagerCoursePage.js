@@ -20,7 +20,7 @@ export class ManagerCoursePage extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-      if(this.props.course.id != nextProps.course.id) {
+      if(nextProps.course !== undefined && this.props.course.id != nextProps.course.id) {
         this.setState({course: Object.assign({}, nextProps.course)});
       }
     }
@@ -49,7 +49,7 @@ export class ManagerCoursePage extends React.Component {
       event.preventDefault();
       this.setState({saving: true});
       this.props.actions.removeCourse(this.state.course)
-        .then(() => this.redirect())
+        .then(() => this.redirect('Course delete'))
         .catch(error => {
           toastr.error(error);
           this.setState({saving: false});
@@ -63,16 +63,17 @@ export class ManagerCoursePage extends React.Component {
       }
       this.setState({saving: true});
       this.props.actions.saveCourse(this.state.course)
-        .then(() => this.redirect())
+        .then(() => this.redirect('Course saved'))
         .catch(error => {
           toastr.error(error);
           this.setState({saving: false});
         });
     }
 
-    redirect() {
+    redirect(message) {
       this.setState({saving: false});
-      toastr.success('Course saved');
+      if (message)
+       toastr.success(message);
       this.context.router.push('/courses');
     }
 
@@ -92,7 +93,7 @@ export class ManagerCoursePage extends React.Component {
 }
 
 ManagerCoursePage.propTypes = {
-  course: PropTypes.object.isRequired,
+  course: PropTypes.object,
   authors: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
 };

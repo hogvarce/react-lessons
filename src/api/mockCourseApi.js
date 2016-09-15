@@ -98,7 +98,7 @@ class CourseApi {
           course.title == courseId.title
         );
         courses.splice(indexOfCourseToDelete, 1);
-        resolve(courses);
+        resolve(Object.assign([], courses));
       }, delay);
     });
   }
