@@ -7,7 +7,7 @@ import { Router, browserHistory } from 'react-router';
 import routes from './routes';
 import {loadCourses} from './actions/courseActions';
 import {loadAuthors} from './actions/authorActions';
-import {loginUserSuccess} from './actions/loginUserSuccess';
+import {loginUserCheck} from './actions/userActions';
 import './styles/styles.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/toastr/build/toastr.min.css';
@@ -18,7 +18,7 @@ store.dispatch(loadAuthors());
 
 let token = localStorage.getItem('token');
 if (token !== null) {
-  store.dispatch(loginUserSuccess(token));
+  store.dispatch(loginUserCheck(token));
 }
 
 render(

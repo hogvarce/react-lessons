@@ -9,3 +9,10 @@ export function loginUserSuccess(token) {
     }
   }
 }
+
+export function loginUserCheck(token) {
+  return dispatch => {
+    if (token != 'aaa')
+      loginUserSuccess('aaa');
+  }
+}
