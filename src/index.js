@@ -18,7 +18,9 @@ store.dispatch(loadAuthors());
 
 let token = localStorage.getItem('token');
 if (token !== null) {
-  store.dispatch(loginUserCheck(token));
+  if (!store.dispatch(loginUserCheck(token))) {
+    browserHistory.pushState('/');
+  }
 }
 
 render(
