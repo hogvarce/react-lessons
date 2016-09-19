@@ -41,6 +41,16 @@ export class ManagerCoursePage extends React.Component {
         formIsValid = false;
       }
 
+      else if (!this.state.course.authorId) {
+        errors.authorId = 'Author must be set.';
+        formIsValid = false;
+      }
+
+      else if (this.state.course.category.length < 5) {
+        errors.category = 'Category must be at least 5 characters.';
+        formIsValid = false;
+      }
+
       this.setState({errors});
       return formIsValid;
     }

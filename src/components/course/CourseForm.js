@@ -54,6 +54,14 @@ const CourseForm = ({course, allAuthors, onSave, onRemove, onChange, saving, err
   );
 };
 
+function getValidationState(course) {
+  const length = course.length;
+  if (length > 10) return 'success';
+  else if (length > 5) return 'warning';
+  else if (length > 0) return 'error';
+}
+
+
 CourseForm.propTypes = {
   course: PropTypes.object.isRequired,
   allAuthors: PropTypes.array,
