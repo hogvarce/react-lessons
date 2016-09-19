@@ -12,8 +12,10 @@ export function loginUserSuccess(token) {
 
 export function loginUserCheck(token) {
   return dispatch => {
-    if (token == 'aaa')
+    if (token == 'aaa') {
       loginUserSuccess('aaa');
+      return true;
+    }
     else
       return false;
   }

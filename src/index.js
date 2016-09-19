@@ -19,8 +19,10 @@ store.dispatch(loadAuthors());
 let token = localStorage.getItem('token');
 if (token !== null) {
   if (!store.dispatch(loginUserCheck(token))) {
-    browserHistory.pushState('/');
+    browserHistory.push('/autorization');
   }
+} else {
+  browserHistory.push('/autorization');
 }
 
 render(
