@@ -2,20 +2,31 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import CourseList from './CourseList';
 import {browserHistory} from 'react-router';
+import {Pagination} from 'react-bootstrap';
 
 class CoursePage extends Component {
   constructor(props, context) {
     super(props, context);
     this.redirectToAddCoursePage = this.redirectToAddCoursePage.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.setState({
+      activePage: 1
+    });
   }
 
   redirectToAddCoursePage() {
     browserHistory.push('/course');
   }
 
-  render() {
+  handleSelect(eventKey) {
+    this.setState({
+      activePage: eventKey
+    });
+  }
 
+  render() {
     const {courses} = this.props;
+    let active = (this.state) ? this.state.activePage: 1;
     return(
       <div>
         <h1>Courses</h1>
@@ -24,13 +35,25 @@ class CoursePage extends Component {
                className="btn btn-primary"
                onClick={this.redirectToAddCoursePage} />
         <CourseList courses={courses} />
+        <Pagination
+          prev
+          next
+          first
+          last
+          ellipsis
+          boundaryLinks
+          items={20}
+          maxButtons={5}
+          activePage={active}
+          onSelect={this.handleSelect} />
       </div>
     );
   }
 }
 
 CoursePage.propTypes = {
-  courses: PropTypes.array.isRequired
+  courses: PropTypes.array.isRequired,
+  activePage: PropTypes.number
 };
 
 function mapStateToProps(state, ownProps) {
