@@ -9,9 +9,6 @@ class CoursePage extends Component {
     super(props, context);
     this.redirectToAddCoursePage = this.redirectToAddCoursePage.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
-    this.setState({
-      activePage: 1
-    });
   }
 
   redirectToAddCoursePage() {
