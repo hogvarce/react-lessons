@@ -57,13 +57,17 @@ export class ManagerCoursePage extends React.Component {
 
     removeCourse(event) {
       event.preventDefault();
-      this.setState({saving: true});
-      this.props.actions.removeCourse(this.state.course)
-        .then(() => this.redirect('Course delete'))
-        .catch(error => {
-          toastr.error(error);
-          this.setState({saving: false});
-        });
+      if (this.state.course.id) {
+        this.setState({saving: true});
+        this.props.actions.removeCourse(this.state.course)
+          .then(() => this.redirect('Course delete'))
+          .catch(error => {
+            toastr.error(error);
+            this.setState({saving: false});
+          });
+      } else {
+        toastr.error('Course not created yeat!');
+      }
     }
 
     saveCourse(event) {

@@ -19,6 +19,10 @@ class CoursePage extends Component {
     this.setState({
       activePage: eventKey
     });
+    this.context.router.push({
+      pathname: '/courses',
+      query: { activePage: eventKey }
+    });
   }
 
   render() {
@@ -51,6 +55,10 @@ class CoursePage extends Component {
 CoursePage.propTypes = {
   courses: PropTypes.array.isRequired,
   activePage: PropTypes.number
+};
+
+CoursePage.contextTypes = {
+  router: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
