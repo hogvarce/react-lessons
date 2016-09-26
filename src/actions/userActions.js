@@ -20,3 +20,7 @@ export function loginUserCheck(token) {
       return false;
   }
 }
+
+export function enterGuest(val) {
+  return { type: types.ENTER_GUEST, quest: val };
+}

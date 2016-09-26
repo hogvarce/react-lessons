@@ -7,6 +7,7 @@ import { Router, browserHistory } from 'react-router';
 import routes from './routes';
 import {loadCourses} from './actions/courseActions';
 import {loadAuthors} from './actions/authorActions';
+import {enterGuest} from './actions/userActions';
 import {loginUserCheck} from './actions/userActions';
 import '../node_modules/bootstrap/dist/css/bootstrap-modify.min.css';
 import '../node_modules/toastr/build/toastr.min.css';
@@ -20,9 +21,13 @@ store.dispatch(loadAuthors());
 let token = localStorage.getItem('token');
 if (token !== null) {
   if (!store.dispatch(loginUserCheck(token))) {
+    store.dispatch(enterGuest(true));
     browserHistory.push('/autorization');
+  } else {
+    store.dispatch(enterGuest(false));
   }
 } else {
+  store.dispatch(enterGuest(true));
   browserHistory.push('/autorization');
 }
 

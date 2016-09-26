@@ -4,9 +4,13 @@ import {connect} from 'react-redux';
 
 class App extends Component {
   render() {
+    let HeaderOut = "";
+    if (!this.props.guest) {
+      HeaderOut = <Header loading={this.props.loading} />;
+    }
     return(
       <div className="container-fluid">
-        <Header loading={this.props.loading} />
+        {HeaderOut}
         {this.props.children}
       </div>
     )
@@ -20,7 +24,8 @@ App.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    loading: state.ajaxCallsinProgress > 0
+    loading: state.ajaxCallsinProgress > 0,
+    guest: state.quest
   };
 }
 
